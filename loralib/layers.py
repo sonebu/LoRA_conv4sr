@@ -243,10 +243,10 @@ class MergedLinear(nn.Linear, LoRALayer):
                 result += self.lora_dropout(x) @ T(self.merge_AB().T) * self.scaling
             return result
 
-class ConvLoRA(nn.Module, LoRALayer):
+class Conv2d(nn.Conv2d, LoRALayer):
     def __init__(self, conv_module, in_channels, out_channels, kernel_size, r=0, lora_alpha=1, lora_dropout=0., merge_weights=True, **kwargs):
-        super(ConvLoRA, self).__init__()
-        nn.Conv2d.__init__(self, in_channels, out_channels, kernel_size, **kwargs)
+        super(ConvLoRA, self).__init__(in_channels, out_channels, kernel_size, **kwargs)
+        #nn.Conv2d.__init__(self, in_channels, out_channels, kernel_size, **kwargs)
         #self.conv = conv_module(in_channels, out_channels, kernel_size, **kwargs)
         LoRALayer.__init__(self, r=r, lora_alpha=lora_alpha, lora_dropout=lora_dropout, merge_weights=merge_weights)
         assert isinstance(kernel_size, int)
@@ -306,9 +306,9 @@ class ConvLoRA(nn.Module, LoRALayer):
         return self._conv_forward(x)
         #return self.conv(x)
 
-class Conv2d(ConvLoRA):
-    def __init__(self, *args, **kwargs):
-        super(Conv2d, self).__init__(nn.Conv2d, *args, **kwargs)
+#class Conv2d(ConvLoRA):
+#    def __init__(self, *args, **kwargs):
+#        super(Conv2d, self).__init__(nn.Conv2d, *args, **kwargs)
 
 class Conv1d(ConvLoRA):
     def __init__(self, *args, **kwargs):
