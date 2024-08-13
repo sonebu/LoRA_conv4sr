@@ -245,7 +245,7 @@ class MergedLinear(nn.Linear, LoRALayer):
 
 class Conv2d(nn.Conv2d, LoRALayer):
     def __init__(self, conv_module, in_channels, out_channels, kernel_size, r=0, lora_alpha=1, lora_dropout=0., merge_weights=True, **kwargs):
-        super(ConvLoRA, self).__init__(in_channels, out_channels, kernel_size, **kwargs)
+        super(Conv2d, self).__init__(in_channels, out_channels, kernel_size, **kwargs)
         #nn.Conv2d.__init__(self, in_channels, out_channels, kernel_size, **kwargs)
         #self.conv = conv_module(in_channels, out_channels, kernel_size, **kwargs)
         LoRALayer.__init__(self, r=r, lora_alpha=lora_alpha, lora_dropout=lora_dropout, merge_weights=merge_weights)
@@ -277,7 +277,7 @@ class Conv2d(nn.Conv2d, LoRALayer):
             nn.init.zeros_(self.lora_B)
 
     def train(self, mode=True):
-        super(ConvLoRA, self).train(mode)
+        super(Conv2d, self).train(mode)
         if mode:
             if self.merge_weights and self.merged:
                 if self.r > 0:
@@ -309,13 +309,13 @@ class Conv2d(nn.Conv2d, LoRALayer):
 #class Conv2d(ConvLoRA):
 #    def __init__(self, *args, **kwargs):
 #        super(Conv2d, self).__init__(nn.Conv2d, *args, **kwargs)
-
-class Conv1d(ConvLoRA):
-    def __init__(self, *args, **kwargs):
-        super(Conv1d, self).__init__(nn.Conv1d, *args, **kwargs)
-
-# Can Extend to other ones like this
-
-class Conv3d(ConvLoRA):
-    def __init__(self, *args, **kwargs):
-        super(Conv3d, self).__init__(nn.Conv3d, *args, **kwargs)
+#
+#class Conv1d(ConvLoRA):
+#    def __init__(self, *args, **kwargs):
+#        super(Conv1d, self).__init__(nn.Conv1d, *args, **kwargs)
+#
+## Can Extend to other ones like this
+#
+#class Conv3d(ConvLoRA):
+#    def __init__(self, *args, **kwargs):
+#        super(Conv3d, self).__init__(nn.Conv3d, *args, **kwargs)
