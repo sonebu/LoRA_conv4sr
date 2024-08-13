@@ -251,6 +251,7 @@ class Conv2d(nn.Conv2d, LoRALayer):
         LoRALayer.__init__(self, r=r, lora_alpha=lora_alpha, lora_dropout=lora_dropout, merge_weights=merge_weights)
         assert isinstance(kernel_size, int)
         # Actual trainable parameters
+        self.r = r
         if r > 0:
             self.lora_A = nn.Parameter(
                 self.weight.new_zeros((r * kernel_size, in_channels * kernel_size))
@@ -303,7 +304,7 @@ class Conv2d(nn.Conv2d, LoRALayer):
                 self.bias
                 #self.conv.bias
             )
-        return self._conv_forward(x)
+        return self._conv_forward(x, self.weight, self.bias)
         #return self.conv(x)
 
 #class Conv2d(ConvLoRA):
