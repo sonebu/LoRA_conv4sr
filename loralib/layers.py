@@ -244,7 +244,7 @@ class MergedLinear(nn.Linear, LoRALayer):
             return result
 
 class Conv2d(nn.Conv2d, LoRALayer):
-    def __init__(self, conv_module, in_channels, out_channels, kernel_size, r=0, lora_alpha=1, lora_dropout=0., merge_weights=True, **kwargs):
+    def __init__(self, in_channels, out_channels, kernel_size, r=0, lora_alpha=1, lora_dropout=0., merge_weights=True, **kwargs):
         super(Conv2d, self).__init__(in_channels, out_channels, kernel_size, **kwargs)
         #nn.Conv2d.__init__(self, in_channels, out_channels, kernel_size, **kwargs)
         #self.conv = conv_module(in_channels, out_channels, kernel_size, **kwargs)
