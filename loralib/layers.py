@@ -269,8 +269,8 @@ class Conv2d(nn.Conv2d, LoRALayer):
 
     def reset_parameters(self):
         #self.conv.reset_parameters()
-        nn.init.zeros_(self.weight)
-        nn.init.zeros_(self.bias)
+        #nn.init.zeros_(self.weight)
+        #nn.init.zeros_(self.bias)
         if hasattr(self, 'lora_A'):
             # initialize A the same way as the default for nn.Linear and B to zero
             nn.init.kaiming_uniform_(self.lora_A, a=math.sqrt(5))
